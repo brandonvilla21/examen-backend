@@ -24,7 +24,11 @@ app.get('/', function (req, res) {
 */
 app.get('/students', (req, res) => {
   // Query
-  connection.query('SELECT * FROM student',  (error, results, fields) => {
+  connection.query(`
+    SELECT * FROM student
+    INNER JOIN carrer ON student.id_carrer = carrer.id_carrer;
+  `
+  ,(error, results, fields) => {
     if (error) throw error;
     res.status(200).json(results)
   });
@@ -41,7 +45,6 @@ app.post('/students', (req, res) => {
     if (error) throw error;
     res.status(200).json(results)
   });
-  console.log(query.sql)
 });
 
 /**
